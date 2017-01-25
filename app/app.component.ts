@@ -1,112 +1,46 @@
-import {Component, OnInit} from "@angular/core";
-import {Hero} from "./hero";
-import {HeroService} from "./hero.service";
+/**
+ * Created by andre on 1/2/17.
+ */
+
+import {Component} from "@angular/core";
 
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
+    styleUrls: ['app.component.css'],
     template: `
 <h1>
     {{title}}
 </h1>
-
-<h2>My Heroes</h2>
-
-<ul class="heroes">
-    <li *ngFor="let hero of heroes" 
-        [class.selected]="hero === hero"
-        (click)="onSelect(hero)" >
-        <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </li>
-</ul>
-
-<my-hero-detail [hero]="selectedHero"></my-hero-detail>
-    `,
+<nav>
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/heroes" routerLinkActive="active">Heroes</a>
+</nav>
+<router-outlet></router-outlet>
+`,
     styles: [`
-.selected {
-    background-color: #7fabdc !important;
-    color: white;
+/* unvisited link */
+a:link {
+    color: cornflowerblue;
 }
 
-.heroes {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 15em;
+/* visited link */
+a:visited {
+    color: lightblue;
 }
 
-.heroes li {
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    background-color: #EEE;
-    color: #336;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.6em;
-    border-radius: 4px;
+/* mouse over link */
+a:hover {
+    color: lightgreen;
 }
 
-.heroes li.selected:hover {
-    background-color: #BBD8DC !important;
-    color: white;
+/* selected link */
+a:active {
+    color: lightgrey;
 }
-
-.heroes li:hover {
-    color: #607D8B;
-    background-color: #DDD;
-    left: .1em;
-}
-
-.heroes .text {
-    position: relative;
-    top: -3px;
-}
-
-.heroes .badge {
-    display: inline-block;
-    font-size: small;
-    color: white;
-    padding: 0.8em 0.7em 0 0.7em;
-    background-color: #607D8B;
-    line-height: 1em;
-    position: relative;
-    left: -1px;
-    top: -4px;
-    height: 1.8em;
-    margin-right: .8em;
-    border-radius: 4px 0 0 4px;
-}
-`],
-
-    providers: [HeroService]
-
+`]
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
     title = "Tour of Heroes";
-
-    constructor(private heroService: HeroService) {
-    }
-
-    heroes: Hero[];
-    selectedHero: Hero;
-
-    getHeroes(): void {
-        // this.heroService.getHeroes().then(
-        this.heroService.getHeroesSlowly().then(
-            (heroes) => {
-                this.heroes = heroes
-            }
-        );
-
-    }
-
-    onSelect(hero: Hero): void {
-        this.selectedHero = hero;
-    }
-
-    ngOnInit(): void {
-        this.getHeroes();
-    }
-
 }
